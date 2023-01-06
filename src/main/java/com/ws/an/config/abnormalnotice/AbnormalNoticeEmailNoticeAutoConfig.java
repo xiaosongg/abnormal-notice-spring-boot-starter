@@ -9,12 +9,12 @@ import org.springframework.context.annotation.Configuration;
  * @author WuSong
  * @version 1.0
  * @date 2023/1/6 17:09
- * @description
+ * @description 邮箱通知自动装配
  */
 @Configuration
 @ConditionalOnProperty(value = "abnormal.notice.email.enabled", havingValue = "true")
 @EnableConfigurationProperties({ EmailNoticeProperty.class })
-public class AbnormalNoticeEmailNoticeConfig {
+public class AbnormalNoticeEmailNoticeAutoConfig {
 
 
 }

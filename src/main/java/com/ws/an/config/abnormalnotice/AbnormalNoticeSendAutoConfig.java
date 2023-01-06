@@ -8,7 +8,6 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
-import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.task.AsyncTaskExecutor;
@@ -17,13 +16,13 @@ import org.springframework.core.task.AsyncTaskExecutor;
  * @author WuSong
  * @version 1.0
  * @date 2023/1/6 17:19
- * @description
+ * @description 通知策略自动装配
  */
 @Configuration
 @ConditionalOnAbnormalNotice
-public class AbnormalNoticeSendConfig {
+public class AbnormalNoticeSendAutoConfig {
 
-    private final Log logger = LogFactory.getLog(AbnormalNoticeSendConfig.class);
+    private final Log logger = LogFactory.getLog(AbnormalNoticeSendAutoConfig.class);
 
     @Bean
     @ConditionalOnMissingBean

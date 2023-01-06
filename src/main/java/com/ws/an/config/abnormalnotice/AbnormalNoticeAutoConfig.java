@@ -15,5 +15,5 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 @Conditional(AbnormalNoticeEnabledCondition.class)
 @EnableConfigurationProperties(AbnormalNoticeProperties.class)
-public class AbnormalNoticeConfig {
+public class AbnormalNoticeAutoConfig {
 }
