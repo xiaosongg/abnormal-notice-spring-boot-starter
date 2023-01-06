@@ -1,8 +1,14 @@
 package com.ws.an.config.abnormalnotice;
 
+import com.ws.an.abnormalnoticehandle.ExceptionHandler;
 import com.ws.an.config.annos.ConditionalOnAbnormalNotice;
+import com.ws.an.properties.AbnormalNoticeProperties;
 import com.ws.an.properties.NoticeProperties;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
+import org.springframework.context.ApplicationEventPublisher;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 /**
@@ -15,4 +21,15 @@ import org.springframework.context.annotation.Configuration;
 @ConditionalOnAbnormalNotice
 @EnableConfigurationProperties({ NoticeProperties.class })
 public class NoticeAutoConfig {
+
+    private final Log logger = LogFactory.getLog(NoticeAutoConfig.class);
+
+    @Bean
+    public ExceptionHandler exceptionHandler(AbnormalNoticeProperties abnormalNoticeProperties,
+                                             NoticeProperties noticeProperties, ApplicationEventPublisher applicationEventPublisher) {
+        logger.debug("创建异常处理器");
+        ExceptionHandler exceptionHandler = new ExceptionHandler(abnormalNoticeProperties, noticeProperties,
+                applicationEventPublisher);
+        return exceptionHandler;
+    }
 }

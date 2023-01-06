@@ -10,7 +10,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
  * @date 2023/1/6 16:55
  * @description
  */
-@ConfigurationProperties(prefix = "abnormal.notice")
+@ConfigurationProperties(prefix = "abnormal")
 public class AbnormalNoticeProperties {
 
     /**
