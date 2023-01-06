@@ -9,9 +9,12 @@ import com.ws.an.text.NoticeTextResolver;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.AutoConfigureAfter;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.autoconfigure.mail.MailProperties;
+import org.springframework.boot.autoconfigure.mail.MailSenderAutoConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.mail.MailSender;
@@ -23,6 +26,8 @@ import org.springframework.mail.MailSender;
  * @description
  */
 @Configuration
+@AutoConfigureAfter({ MailSenderAutoConfiguration.class })
+@ConditionalOnBean({ MailSender.class, MailProperties.class })
 @ConditionalOnAbnormalNotice
 @ConditionalOnProperty(value = "abnormal.notice.email.enabled", havingValue = "true")
 public class AbnormalNoticeEmailSendingAutoConfig {

@@ -10,8 +10,6 @@ import java.util.LinkedList;
 import java.util.List;
 
 import static java.util.stream.Collectors.toList;
-import static oracle.jrockit.jfr.settings.StringParse.stackTrace;
-
 /**
  * @author WuSong
  * @version 1.0

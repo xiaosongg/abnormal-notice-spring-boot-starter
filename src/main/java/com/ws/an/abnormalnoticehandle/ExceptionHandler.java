@@ -62,16 +62,16 @@ public class ExceptionHandler {
      * @param args      参数信息
      * @return
      */
-    public ExceptionNotice createNotice(RuntimeException ex, String method, Object[] args) {
-        if (containsException(ex))
-            return null;
-        ExceptionNotice exceptionNotice = new ExceptionNotice(ex, exceptionNoticeProperties.getIncludedTracePackage(),
-                args, noticeProperties.getProjectEnviroment(),
-                String.format("%s的异常通知", noticeProperties.getProjectName()));
-        logger.debug("创建异常通知：" + method);
-        exceptionNotice.setProject(noticeProperties.getProjectName());
-        applicationEventPublisher.publishEvent(new ExceptionNoticeEvent(this, exceptionNotice));
-        return exceptionNotice;
-
-    }
+//    public ExceptionNotice createNotice(RuntimeException ex, String method, Object[] args) {
+//        if (containsException(ex))
+//            return null;
+//        ExceptionNotice exceptionNotice = new ExceptionNotice(ex, exceptionNoticeProperties.getIncludedTracePackage(),
+//                args, noticeProperties.getProjectEnviroment(),
+//                String.format("%s的异常通知", noticeProperties.getProjectName()));
+//        logger.debug("创建异常通知：" + method);
+//        exceptionNotice.setProject(noticeProperties.getProjectName());
+//        applicationEventPublisher.publishEvent(new ExceptionNoticeEvent(this, exceptionNotice));
+//        return exceptionNotice;
+//
+//    }
 }
