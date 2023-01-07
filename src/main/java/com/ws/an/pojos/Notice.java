@@ -54,11 +54,6 @@ public class Notice extends AbnormalNotice {
     protected List<String> traceInfo = new ArrayList<>();
 
     /**
-     * 出现次数
-     */
-    protected Long showCount = 1L;
-
-    /**
      * @param title
      * @param projectEnviroment
      */
@@ -127,7 +122,6 @@ public class Notice extends AbnormalNotice {
         stringBuilder.append("异常追踪：").append("\r\n").append(String.join("\r\n", traceInfo)).append("\r\n");
         stringBuilder.append("最后一次出现时间：").append(createTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")))
                 .append("\r\n");
-        stringBuilder.append("出现次数：").append(showCount).append("\r\n");
         return stringBuilder.toString();
 
     }

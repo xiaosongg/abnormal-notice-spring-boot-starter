@@ -4,13 +4,18 @@ import com.ws.an.abnormalnoticehandle.event.AbnormalNoticeAsyncSendListener;
 import com.ws.an.abnormalnoticehandle.event.AbnormalNoticeSendListener;
 import com.ws.an.abnormalnoticehandle.event.AbstractNoticeSendListener;
 import com.ws.an.config.annos.ConditionalOnAbnormalNotice;
+import com.ws.an.message.INoticeSendComponent;
+import com.ws.an.pojos.Notice;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.task.AsyncTaskExecutor;
+
+import java.util.List;
 
 /**
  * @author WuSong
@@ -22,6 +27,9 @@ import org.springframework.core.task.AsyncTaskExecutor;
 @ConditionalOnAbnormalNotice
 public class AbnormalNoticeSendAutoConfig {
 
+    @Autowired
+    private List<INoticeSendComponent<Notice>> list;
+
     private final Log logger = LogFactory.getLog(AbnormalNoticeSendAutoConfig.class);
 
     @Bean
@@ -29,7 +37,7 @@ public class AbnormalNoticeSendAutoConfig {
     @ConditionalOnProperty(value = "abnormal.notice.enable-async", havingValue = "false", matchIfMissing = true)
     public AbstractNoticeSendListener abnormalNoticeSendListener() {
         logger.info("开始创建同步发送监听器");
-        AbstractNoticeSendListener listener = new AbnormalNoticeSendListener();
+        AbstractNoticeSendListener listener = new AbnormalNoticeSendListener(list);
         return listener;
     }
 
@@ -38,7 +46,7 @@ public class AbnormalNoticeSendAutoConfig {
     @ConditionalOnProperty(value = "abnormal.notice.enable-async", havingValue = "true")
     public AbstractNoticeSendListener abnormalNoticeAsyncSendListener(AsyncTaskExecutor applicationTaskExecutor) {
         logger.info("开始创建异步发送监听器");
-        AbstractNoticeSendListener listener = new AbnormalNoticeAsyncSendListener(applicationTaskExecutor);
+        AbstractNoticeSendListener listener = new AbnormalNoticeAsyncSendListener(applicationTaskExecutor,list);
         return listener;
     }
 

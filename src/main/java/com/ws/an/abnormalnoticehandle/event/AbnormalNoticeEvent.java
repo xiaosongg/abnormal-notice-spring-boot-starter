@@ -1,5 +1,6 @@
 package com.ws.an.abnormalnoticehandle.event;
 
+import com.ws.an.pojos.Notice;
 import javafx.application.Application;
 import org.springframework.context.ApplicationEvent;
 
@@ -10,7 +11,20 @@ import org.springframework.context.ApplicationEvent;
  * @description
  */
 public class AbnormalNoticeEvent extends ApplicationEvent {
-    public AbnormalNoticeEvent(Object source) {
+
+    private static final long serialVersionUID = 1L;
+
+    private final Notice notice;
+
+    public AbnormalNoticeEvent(Object source, Notice notice) {
         super(source);
+        this.notice = notice;
+    }
+
+    /**
+     * @return the notice
+     */
+    public Notice getNotice() {
+        return notice;
     }
 }
