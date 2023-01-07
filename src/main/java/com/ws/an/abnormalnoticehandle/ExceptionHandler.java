@@ -1,5 +1,7 @@
 package com.ws.an.abnormalnoticehandle;
 
+import com.ws.an.abnormalnoticehandle.event.AbnormalNoticeEvent;
+import com.ws.an.pojos.Notice;
 import com.ws.an.properties.AbnormalNoticeProperties;
 import com.ws.an.properties.NoticeProperties;
 import org.apache.commons.logging.Log;
@@ -62,16 +64,16 @@ public class ExceptionHandler {
      * @param args      参数信息
      * @return
      */
-//    public ExceptionNotice createNotice(RuntimeException ex, String method, Object[] args) {
-//        if (containsException(ex))
-//            return null;
-//        ExceptionNotice exceptionNotice = new ExceptionNotice(ex, exceptionNoticeProperties.getIncludedTracePackage(),
-//                args, noticeProperties.getProjectEnviroment(),
-//                String.format("%s的异常通知", noticeProperties.getProjectName()));
-//        logger.debug("创建异常通知：" + method);
-//        exceptionNotice.setProject(noticeProperties.getProjectName());
-//        applicationEventPublisher.publishEvent(new ExceptionNoticeEvent(this, exceptionNotice));
-//        return exceptionNotice;
-//
-//    }
+    public Notice createNotice(RuntimeException ex, String method, Object[] args) {
+        if (containsException(ex))
+            return null;
+        Notice notice = new Notice(ex, noticeProperties.getIncludedTracePackage(),
+                args, abnormalNoticeProperties.getProjectEnviroment(),
+                String.format("%s的异常通知", abnormalNoticeProperties.getProjectName()));
+        logger.debug("创建异常通知：" + method);
+        notice.setProject(abnormalNoticeProperties.getProjectName());
+        applicationEventPublisher.publishEvent(new AbnormalNoticeEvent(this, notice));
+        return notice;
+
+    }
 }

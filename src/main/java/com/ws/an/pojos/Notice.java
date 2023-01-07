@@ -126,4 +126,119 @@ public class Notice extends AbnormalNotice {
 
     }
 
+    /**
+     * @return the project
+     */
+    public String getProject() {
+        return project;
+    }
+
+    /**
+     * @param project the project to set
+     */
+    public void setProject(String project) {
+        this.project = project;
+    }
+
+    /**
+     * @return the uid
+     */
+    public String getUid() {
+        return uid;
+    }
+
+    /**
+     * @param uid the uid to set
+     */
+    public void setUid(String uid) {
+        this.uid = uid;
+    }
+
+    /**
+     * @return the methodName
+     */
+    public String getMethodName() {
+        return methodName;
+    }
+
+    /**
+     * @param methodName the methodName to set
+     */
+    public void setMethodName(String methodName) {
+        this.methodName = methodName;
+    }
+
+    /**
+     * @return the parames
+     */
+    public List<Object> getParames() {
+        return parames;
+    }
+
+    /**
+     * @param parames the parames to set
+     */
+    public void setParames(List<Object> parames) {
+        this.parames = parames;
+    }
+
+    /**
+     * @return the classPath
+     */
+    public String getClassPath() {
+        return classPath;
+    }
+
+    /**
+     * @param classPath the classPath to set
+     */
+    public void setClassPath(String classPath) {
+        this.classPath = classPath;
+    }
+
+    /**
+     * @return the exceptionMessage
+     */
+    public List<String> getExceptionMessage() {
+        return exceptionMessage;
+    }
+
+    /**
+     * @param exceptionMessage the exceptionMessage to set
+     */
+    public void setExceptionMessage(List<String> exceptionMessage) {
+        this.exceptionMessage = exceptionMessage;
+    }
+
+    /**
+     * @return the traceInfo
+     */
+    public List<String> getTraceInfo() {
+        return traceInfo;
+    }
+
+    /**
+     * @param traceInfo the traceInfo to set
+     */
+    public void setTraceInfo(List<String> traceInfo) {
+        this.traceInfo = traceInfo;
+    }
+
+    public ProjectEnviroment getProjectEnviroment() {
+        return projectEnviroment;
+    }
+
+    public void setProjectEnviroment(ProjectEnviroment projectEnviroment) {
+        this.projectEnviroment = projectEnviroment;
+    }
+
+    @Override
+    public String toString() {
+        return "ExceptionNotice [project=" + project + ", uid=" + uid + ", methodName=" + methodName + ", parames="
+                + parames + ", classPath=" + classPath + ", exceptionMessage=" + exceptionMessage + ", traceInfo="
+                + traceInfo + ", title=" + title + ", projectEnviroment="
+                + projectEnviroment + ", createTime=" + createTime + "]";
+    }
+
+
 }
