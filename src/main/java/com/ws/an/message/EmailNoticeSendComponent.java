@@ -7,6 +7,7 @@ import org.springframework.boot.autoconfigure.mail.MailProperties;
 import org.springframework.mail.MailSender;
 import org.springframework.mail.SimpleMailMessage;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.regex.Pattern;
 
 /**
@@ -47,6 +48,7 @@ public class EmailNoticeSendComponent<T extends AbnormalNotice> implements INoti
         if (bcc != null && bcc.length > 0)
             mailMessage.setBcc(bcc);
         mailMessage.setText(exceptionNoticeResolver.resolve(notice));
+
         mailMessage
                 .setSubject(String.format("一个来自%s的提醒（%s）", notice.getTitle(), notice.getProjectEnviroment().getName()));
         mailSender.send(mailMessage);

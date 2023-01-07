@@ -1,5 +1,6 @@
 package com.ws.an.properties;
 
+import com.ws.an.properties.enums.ListenType;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
 import java.util.ArrayList;
@@ -29,6 +30,19 @@ public class NoticeProperties {
      * 排除的需要统计的异常
      */
     private List<Class<? extends Exception>> excludeExceptions = new LinkedList<>();
+
+    /**
+     * <p>
+     * 通过注解进行监控，目前提供两种方式：
+     * </p>
+     * <ol>
+     * 一种只是普通的监视方法中的异常，主要包含了方法名、方法参数等相关内容；
+     * </ol>
+     * <ol>
+     * 另一种是监视请求出现异常后的通知，额外包含了请求路径、请求参数（param、body）以及想要查询的头信息，对于头信息的过滤参看
+     * </ol>
+     */
+    private ListenType listenType = ListenType.COMMON;
 
     /**
      * 是否开启异步通知
@@ -85,5 +99,18 @@ public class NoticeProperties {
         this.enableAsync = enableAsync;
     }
 
+    /**
+     * @return the listenType
+     */
+    public ListenType getListenType() {
+        return listenType;
+    }
+
+    /**
+     * @param listenType the listenType to set
+     */
+    public void setListenType(ListenType listenType) {
+        this.listenType = listenType;
+    }
 
 }

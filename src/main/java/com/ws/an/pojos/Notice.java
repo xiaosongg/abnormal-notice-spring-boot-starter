@@ -2,14 +2,20 @@ package com.ws.an.pojos;
 
 import com.ws.an.properties.enums.ProjectEnviroment;
 import org.springframework.util.DigestUtils;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.URLDecoder;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
 
 import static java.util.stream.Collectors.toList;
+
 /**
  * @author WuSong
  * @version 1.0
@@ -54,11 +60,16 @@ public class Notice extends AbnormalNotice {
     protected List<String> traceInfo = new ArrayList<>();
 
     /**
+     * 请求体
+     */
+    protected HttpServletRequest request;
+
+    /**
      * @param title
      * @param projectEnviroment
      */
     public Notice(Throwable ex, String filterTrace, Object[] args, ProjectEnviroment projectEnviroment,
-                  String title) {
+                  String title, HttpServletRequest request) {
         super(title, projectEnviroment);
         this.exceptionMessage = gainExceptionMessage(ex);
         this.parames = args == null ? null : Arrays.stream(args).collect(toList());
@@ -69,6 +80,7 @@ public class Notice extends AbnormalNotice {
             this.classPath = list.get(0).getClassName();
         }
         this.uid = calUid();
+        this.request = request;
     }
 
     private List<String> gainExceptionMessage(Throwable exception) {
@@ -109,9 +121,25 @@ public class Notice extends AbnormalNotice {
     }
 
     public String createText() {
+
+
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append("工程信息：").append(project).append("(").append(projectEnviroment.getName()).append(")")
                 .append("\r\n");
+        stringBuilder.append("接口地址：").append(request.getRequestURI()).append("\r\n");
+
+        String requestBody = this.buildRequestBody(request);
+        if (requestBody != null) {
+            stringBuilder.append("请求体数据：").append(requestBody).append("\r\n");
+        }
+
+        Map<String, String> headers = this.buildHeaders(request);
+        if (headers != null && headers.size() > 0) {
+            stringBuilder.append("请求头：").append("\r\n");
+            stringBuilder.append(String.join(",\t", headers.entrySet().stream()
+                    .map(x -> String.format("%s::%s", x.getKey(), x.getValue())).collect(toList())));
+            stringBuilder.append("\r\n");
+        }
         stringBuilder.append("类路径：").append(classPath).append("\r\n");
         stringBuilder.append("方法名：").append(methodName).append("\r\n");
         if (parames != null && parames.size() > 0) {
@@ -123,6 +151,41 @@ public class Notice extends AbnormalNotice {
         stringBuilder.append("最后一次出现时间：").append(createTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")))
                 .append("\r\n");
         return stringBuilder.toString();
+
+    }
+
+    private Map<String, String> buildHeaders(HttpServletRequest request) {
+        Map<String, String> map = new HashMap<String, String>();
+
+        Enumeration<String> enumeration = request.getHeaderNames();
+        while (enumeration.hasMoreElements()) {
+            String str = enumeration.nextElement();
+            map.put(str, request.getHeader(str));
+        }
+
+        return map;
+    }
+
+    private String buildRequestBody(HttpServletRequest request) {
+        // 读取请求内容
+        BufferedReader br = null;
+        try {
+            br = new BufferedReader(new InputStreamReader(request.getInputStream()));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        String line = null;
+        StringBuilder sb = new StringBuilder();
+        while (true) {
+            try {
+                if (!((line = br.readLine()) != null)) break;
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+            sb.append(line);
+        }
+
+        return sb.toString();
 
     }
 
@@ -240,5 +303,11 @@ public class Notice extends AbnormalNotice {
                 + projectEnviroment + ", createTime=" + createTime + "]";
     }
 
+    public void setRequest(HttpServletRequest request){
+        this.request = request;
+    }
 
+    public HttpServletRequest getRequest(){
+        return request;
+    }
 }

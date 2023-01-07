@@ -7,7 +7,10 @@ import org.apache.commons.logging.LogFactory;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.AfterThrowing;
 import org.aspectj.lang.annotation.Aspect;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.Arrays;
 
 /**
@@ -40,7 +43,11 @@ public class AbnormalNoticeAop {
     private void handleException(RuntimeException exception, String methodName, Object[] args) {
         logger.debug("出现异常：" + methodName
                 + String.join(",", Arrays.stream(args).map(x -> x.toString()).toArray(String[]::new)));
-        abnormalNoticeHandler.createNotice(exception, methodName, args);
+
+        ServletRequestAttributes servletRequestAttributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
+        HttpServletRequest request = servletRequestAttributes.getRequest();
+
+        abnormalNoticeHandler.createNotice(exception, methodName, args,request);
     }
 
 }

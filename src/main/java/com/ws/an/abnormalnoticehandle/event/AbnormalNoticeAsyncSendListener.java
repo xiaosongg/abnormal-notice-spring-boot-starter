@@ -34,6 +34,5 @@ public class AbnormalNoticeAsyncSendListener extends AbstractNoticeSendListener 
         logger.debug("消息异步发送");
 
         executor.execute(() -> send(event.getNotice()));
-
     }
 }

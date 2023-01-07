@@ -8,6 +8,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.context.ApplicationEventPublisher;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -59,19 +60,23 @@ public class AbnormalNoticeHandler {
     /**
      * 反射方式获取方法中出现的异常进行的通知
      *
-     * @param ex        异常信息
-     * @param method    方法名
-     * @param args      参数信息
+     * @param ex     异常信息
+     * @param method 方法名
+     * @param args   参数信息
      * @return
      */
-    public Notice createNotice(RuntimeException ex, String method, Object[] args) {
-        if (containsException(ex))
+    public Notice createNotice(RuntimeException ex, String method, Object[] args, HttpServletRequest request) {
+        if (containsException(ex)) {
             return null;
+        }
+
         Notice notice = new Notice(ex, noticeProperties.getIncludedTracePackage(),
                 args, abnormalNoticeProperties.getProjectEnviroment(),
-                String.format("%s的异常通知", abnormalNoticeProperties.getProjectName()));
+                String.format("%s的异常通知", abnormalNoticeProperties.getProjectName()),request);
+
         logger.debug("创建异常通知：" + method);
         notice.setProject(abnormalNoticeProperties.getProjectName());
+
         applicationEventPublisher.publishEvent(new AbnormalNoticeEvent(this, notice));
         return notice;
 
