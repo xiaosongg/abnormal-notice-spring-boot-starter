@@ -1,5 +1,6 @@
 package com.ws.an.config.abnormalnotice;
 
+import com.ws.an.client.WechatNoticeClient;
 import com.ws.an.config.annos.ConditionalOnAbnormalNotice;
 import com.ws.an.message.EmailNoticeSendComponent;
 import com.ws.an.message.INoticeSendComponent;
@@ -35,13 +36,16 @@ public class AbnormalNoticeWechatSendingAutoConfig {
     @Autowired
     private WechatNoticeProperty wechatNoticeProperty;
 
+    @Autowired
+    private WechatNoticeClient wechatNoticeClient;
+
     private final static Log logger = LogFactory.getLog(AbnormalNoticeWechatSendingAutoConfig.class);
 
     @Bean("wechatSendingComponent")
     @ConditionalOnMissingBean(name = "wechatSendingComponent")
     public INoticeSendComponent<Notice> wechatNoticeSendComponent() {
         logger.debug("创建邮件异常通知");
-        INoticeSendComponent<Notice> component = new WechatNoticeSendComponent<Notice>(wechatNoticeProperty,AbnormalNoticeTextResolver());
+        INoticeSendComponent<Notice> component = new WechatNoticeSendComponent<Notice>(wechatNoticeClient,wechatNoticeProperty,AbnormalNoticeTextResolver());
         return component;
     }
 
