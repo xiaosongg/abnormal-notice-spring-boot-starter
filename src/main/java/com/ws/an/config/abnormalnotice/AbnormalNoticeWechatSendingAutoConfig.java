@@ -1,8 +1,16 @@
 package com.ws.an.config.abnormalnotice;
 
 import com.ws.an.config.annos.ConditionalOnAbnormalNotice;
+import com.ws.an.message.EmailNoticeSendComponent;
+import com.ws.an.message.INoticeSendComponent;
+import com.ws.an.message.WechatNoticeSendComponent;
 import com.ws.an.pojos.Notice;
+import com.ws.an.properties.notice.EmailNoticeProperty;
+import com.ws.an.properties.notice.WechatNoticeProperty;
 import com.ws.an.text.NoticeTextResolver;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.AutoConfigureAfter;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
@@ -24,9 +32,18 @@ import org.springframework.mail.MailSender;
 @ConditionalOnProperty(value = "abnormal.notice.wechat.enabled", havingValue = "true")
 public class AbnormalNoticeWechatSendingAutoConfig {
 
+    @Autowired
+    private WechatNoticeProperty wechatNoticeProperty;
 
+    private final static Log logger = LogFactory.getLog(AbnormalNoticeWechatSendingAutoConfig.class);
 
-
+    @Bean("wechatSendingComponent")
+    @ConditionalOnMissingBean(name = "wechatSendingComponent")
+    public INoticeSendComponent<Notice> wechatNoticeSendComponent() {
+        logger.debug("创建邮件异常通知");
+        INoticeSendComponent<Notice> component = new WechatNoticeSendComponent<Notice>(wechatNoticeProperty,AbnormalNoticeTextResolver());
+        return component;
+    }
 
 
     @Bean
