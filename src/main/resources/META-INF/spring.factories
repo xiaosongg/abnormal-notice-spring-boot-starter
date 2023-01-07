@@ -1,7 +1,10 @@
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+com.ws.an.config.abnormalnotice.NoticeAutoConfig,\
 com.ws.an.config.abnormalnotice.AbnormalNoticeAutoConfig,\
 com.ws.an.config.abnormalnotice.AbnormalNoticeCommonTypeConfig,\
 com.ws.an.config.abnormalnotice.AbnormalNoticeEmailNoticeAutoConfig,\
 com.ws.an.config.abnormalnotice.AbnormalNoticeEmailSendingAutoConfig,\
-com.ws.an.config.abnormalnotice.AbnormalNoticeSendAutoConfig,\
-com.ws.an.config.abnormalnotice.NoticeAutoConfig
+com.ws.an.config.abnormalnotice.AbnormalNoticeWechatNoticeAutoConfig,\
+com.ws.an.config.abnormalnotice.AbnormalNoticeWechatSendingAutoConfig,\
+com.ws.an.config.abnormalnotice.AbnormalNoticeSendAutoConfig 
+

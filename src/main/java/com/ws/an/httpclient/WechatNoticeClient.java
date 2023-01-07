@@ -1,9 +1,8 @@
-package com.ws.an.client;
+package com.ws.an.httpclient;
 
 import com.dtflys.forest.annotation.JSONBody;
 import com.dtflys.forest.annotation.Post;
 import com.dtflys.forest.annotation.Var;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Component;
 
 import java.util.Map;
@@ -14,7 +13,6 @@ import java.util.Map;
  * @date 2023/1/7 23:28
  * @description 企业微信机器人通知client
  */
-@ConditionalOnProperty(value = "abnormal.notice.wechat.enabled", havingValue = "true")
 @Component
 public interface WechatNoticeClient {
     @Post(

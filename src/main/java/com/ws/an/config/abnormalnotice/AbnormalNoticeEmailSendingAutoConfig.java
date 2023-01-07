@@ -43,7 +43,7 @@ public class AbnormalNoticeEmailSendingAutoConfig {
     @ConditionalOnMissingBean(name = "emailSendingComponent")
     public INoticeSendComponent<Notice> emailNoticeSendComponent(MailProperties mailProperties,
                                                                  MailSender mailSender) {
-        logger.debug("创建邮件异常通知");
+        logger.info("创建邮件异常通知");
         INoticeSendComponent<Notice> component = new EmailNoticeSendComponent<Notice>(
                 mailSender, mailProperties, emailNoticeProperty, AbnormalNoticeTextResolver());
         return component;

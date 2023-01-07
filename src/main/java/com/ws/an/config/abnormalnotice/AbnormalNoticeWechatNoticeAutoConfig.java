@@ -13,8 +13,8 @@ import org.springframework.context.annotation.Configuration;
  * @description 企业微信机器人通知自动装配
  */
 @Configuration
-@ConditionalOnAbnormalNotice
 @ConditionalOnProperty(value = "abnormal.notice.wechat.enabled", havingValue = "true")
 @EnableConfigurationProperties({ WechatNoticeProperty.class })
 public class AbnormalNoticeWechatNoticeAutoConfig {
+
 }
