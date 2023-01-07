@@ -13,7 +13,6 @@ import java.util.Map;
  * @date 2023/1/7 23:28
  * @description 企业微信机器人通知client
  */
-@Component
 public interface WechatNoticeClient {
     @Post(
             url = "https://qyapi.weixin.qq.com/cgi-bin/webhook/send?key={key}",

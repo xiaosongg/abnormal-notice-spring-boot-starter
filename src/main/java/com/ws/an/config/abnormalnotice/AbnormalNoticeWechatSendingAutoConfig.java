@@ -19,6 +19,8 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.mail.MailSender;
 
+import javax.annotation.Resource;
+
 /**
  * @author WuSong
  * @version 1.0
@@ -33,13 +35,16 @@ public class AbnormalNoticeWechatSendingAutoConfig {
     @Autowired
     private WechatNoticeProperty wechatNoticeProperty;
 
+    @Resource
+    private WechatNoticeClient wechatNoticeClient;
+
     private final static Log logger = LogFactory.getLog(AbnormalNoticeWechatSendingAutoConfig.class);
 
     @Bean("wechatSendingComponent")
     @ConditionalOnMissingBean(name = "wechatSendingComponent")
-    public INoticeSendComponent<Notice> wechatNoticeSendComponent(Gson gson) {
+    public INoticeSendComponent<Notice> wechatNoticeSendComponent(WechatNoticeClient wechatNoticeClient,Gson gson) {
         logger.info("创建微信机器人异常通知");
-        INoticeSendComponent<Notice> component = new WechatNoticeSendComponent<Notice>(gson,wechatNoticeProperty,AbnormalNoticeTextResolver());
+        INoticeSendComponent<Notice> component = new WechatNoticeSendComponent<Notice>(wechatNoticeClient,gson,wechatNoticeProperty,AbnormalNoticeTextResolver());
         return component;
     }
 

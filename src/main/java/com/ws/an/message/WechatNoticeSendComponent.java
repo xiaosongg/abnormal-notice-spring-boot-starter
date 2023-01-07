@@ -38,14 +38,10 @@ public class WechatNoticeSendComponent<T extends AbnormalNotice> implements INot
 
     private final Gson gson;
 
-    private final WechatNoticeClient wechatNoticeClient = new WechatNoticeClient() {
-        @Override
-        public void sendWechatMsg(String key, Map<String, Object> body) {
+    private final WechatNoticeClient wechatNoticeClient;
 
-        }
-    };
-
-    public WechatNoticeSendComponent(Gson gson,WechatNoticeProperty wechatNoticeProperty, NoticeTextResolver<T> exceptionNoticeResolver){
+    public WechatNoticeSendComponent(WechatNoticeClient wechatNoticeClient,Gson gson,WechatNoticeProperty wechatNoticeProperty, NoticeTextResolver<T> exceptionNoticeResolver){
+        this.wechatNoticeClient = wechatNoticeClient;
         this.gson = gson;
         this.exceptionNoticeResolver = exceptionNoticeResolver;
         this.wechatNoticeProperty = wechatNoticeProperty;
