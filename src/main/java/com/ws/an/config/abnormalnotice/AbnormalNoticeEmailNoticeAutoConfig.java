@@ -1,5 +1,6 @@
 package com.ws.an.config.abnormalnotice;
 
+import com.ws.an.config.annos.ConditionalOnAbnormalNotice;
 import com.ws.an.properties.notice.EmailNoticeProperty;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
@@ -12,6 +13,7 @@ import org.springframework.context.annotation.Configuration;
  * @description 邮箱通知自动装配
  */
 @Configuration
+@ConditionalOnAbnormalNotice
 @ConditionalOnProperty(value = "abnormal.notice.email.enabled", havingValue = "true")
 @EnableConfigurationProperties({ EmailNoticeProperty.class })
 public class AbnormalNoticeEmailNoticeAutoConfig {

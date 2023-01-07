@@ -10,4 +10,29 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
  */
 @ConfigurationProperties(prefix = "abnormal.notice.wechat")
 public class WechatNoticeProperty {
+    /**
+     * 是否开启企业微信机器人通知
+     */
+    private boolean enabled = false;
+
+    /**
+     * 企业微信机器人唯一key
+     */
+    private String key;
+
+    public boolean isEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
+    }
+
+    public String getKey() {
+        return key;
+    }
+
+    public void setKey(String key) {
+        this.key = key;
+    }
 }
