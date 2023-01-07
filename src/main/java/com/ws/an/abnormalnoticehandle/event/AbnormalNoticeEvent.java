@@ -1,7 +1,6 @@
 package com.ws.an.abnormalnoticehandle.event;
 
 import com.ws.an.pojos.Notice;
-import javafx.application.Application;
 import org.springframework.context.ApplicationEvent;
 
 /**

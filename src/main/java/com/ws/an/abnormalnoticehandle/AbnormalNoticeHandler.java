@@ -17,7 +17,7 @@ import java.util.List;
  * @date 2023/1/6 19:52
  * @description
  */
-public class ExceptionHandler {
+public class AbnormalNoticeHandler {
 
 
     private final AbnormalNoticeProperties abnormalNoticeProperties;
@@ -28,7 +28,7 @@ public class ExceptionHandler {
 
     private final Log logger = LogFactory.getLog(getClass());
 
-    public ExceptionHandler(AbnormalNoticeProperties abnormalNoticeProperties, NoticeProperties noticeProperties, ApplicationEventPublisher applicationEventPublisher) {
+    public AbnormalNoticeHandler(AbnormalNoticeProperties abnormalNoticeProperties, NoticeProperties noticeProperties, ApplicationEventPublisher applicationEventPublisher) {
         super();
         this.abnormalNoticeProperties = abnormalNoticeProperties;
         this.noticeProperties = noticeProperties;

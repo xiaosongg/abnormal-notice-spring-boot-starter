@@ -17,4 +17,7 @@ import java.lang.annotation.*;
 @Documented
 @Conditional({ AbnormalNoticeEnabledCondition.class, OnAbnormalNoticeContition.class })
 public @interface ConditionalOnAbnormalNotice {
+
+
+
 }

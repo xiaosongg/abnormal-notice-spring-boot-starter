@@ -19,6 +19,8 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.mail.MailSender;
 
+import javax.annotation.Resource;
+
 /**
  * @author WuSong
  * @version 1.0
@@ -33,7 +35,7 @@ import org.springframework.mail.MailSender;
 public class AbnormalNoticeEmailSendingAutoConfig {
 
     @Autowired
-    private EmailNoticeProperty emailExceptionNoticeProperty;
+    private EmailNoticeProperty emailNoticeProperty;
 
     private final static Log logger = LogFactory.getLog(AbnormalNoticeEmailSendingAutoConfig.class);
 
@@ -43,7 +45,7 @@ public class AbnormalNoticeEmailSendingAutoConfig {
                                                                  MailSender mailSender) {
         logger.debug("创建邮件异常通知");
         INoticeSendComponent<Notice> component = new EmailNoticeSendComponent<Notice>(
-                mailSender, mailProperties, emailExceptionNoticeProperty, AbnormalNoticeTextResolver());
+                mailSender, mailProperties, emailNoticeProperty, AbnormalNoticeTextResolver());
         return component;
     }
 
