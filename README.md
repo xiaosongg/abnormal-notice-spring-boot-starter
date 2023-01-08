@@ -159,7 +159,7 @@ public class DemoController {
 ![效果](/src/main/resources/wechat.png)
 假如在你配置的企业微信机器人发送了类似这个信息的话，那么恭喜你，你成功的产生了一个企业微信机器人异常通知。
 
-#### 参与贡献
+# 参与贡献
 
 1.  Fork 本仓库
 2.  新建 Feat_xxx 分支
