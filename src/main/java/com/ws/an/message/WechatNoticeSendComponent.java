@@ -49,7 +49,7 @@ public class WechatNoticeSendComponent<T extends AbnormalNotice> implements INot
 
     @Override
     public void send(T notice) {
-        logger.info("开始发送微信机器人通知");
+        logger.debug("开始发送微信机器人通知");
         Map<String, Object> sendMap = new HashMap<>();
         //设置消息类型 txt文本
         sendMap.put("msgtype", "text");

@@ -43,7 +43,7 @@ public class AbnormalNoticeWechatSendingAutoConfig {
     @Bean("wechatSendingComponent")
     @ConditionalOnMissingBean(name = "wechatSendingComponent")
     public INoticeSendComponent<Notice> wechatNoticeSendComponent(WechatNoticeClient wechatNoticeClient,Gson gson) {
-        logger.info("创建微信机器人异常通知");
+        logger.debug("创建微信机器人异常通知");
         INoticeSendComponent<Notice> component = new WechatNoticeSendComponent<Notice>(wechatNoticeClient,gson,wechatNoticeProperty,AbnormalNoticeTextResolver());
         return component;
     }
