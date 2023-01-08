@@ -54,7 +54,7 @@ public class WechatNoticeSendComponent<T extends AbnormalNotice> implements INot
         //设置消息类型 txt文本
         sendMap.put("msgtype", "text");
         Map<String, String> contentMap = new HashMap<>();
-        contentMap.put("content", "你好，我是ws的机器人，项目出bug了，bug具体报文：" + exceptionNoticeResolver.resolve(notice));
+        contentMap.put("content", "你好，我是异常通知机器人，有项目出bug了，bug具体报文：\r\n" + exceptionNoticeResolver.resolve(notice));
         sendMap.put("text", contentMap);
 
         wechatNoticeClient.sendWechatMsg(wechatNoticeProperty.getKey(), sendMap);
