@@ -36,7 +36,7 @@ public class AbnormalNoticeSendAutoConfig {
 
     @Bean
     @ConditionalOnMissingBean
-    public AbnormalNoticeStatisticsRepository exceptionNoticeStatisticsRepository() {
+    public AbnormalNoticeStatisticsRepository abnormalNoticeStatisticsRepository() {
         logger.debug("创建默认异常统计仓库");
         AbnormalNoticeStatisticsRepository repository = new DefaultAbnormalNoticeStatisticsRepository();
         return repository;
