@@ -171,6 +171,29 @@ public class DemoController {
     - 时间策略
     - 出现频次策略
 - 相应配置
+```
+abnormal:
+  enabled: true
+  project-name: testDemo
+  notice:
+    enabled: true
+    strategy:
+      enabled: true
+      frequency-type: timeout or showcount
+      notice-show-count: 10
+      notice-time-interval: 8h
+```
+- 具体说明如下：
+
+|名称|参数类型|说明|必要配置|
+|:-:|:-:|:-:|:-:|
+|enabled|boolean|用于开启项目配置，属于总控开关|是|
+|project-name|string|一般忽略，以spring.application.name替代|否|
+|notice.strategy.enabled|boolean|用于开启通知策略|否|
+|notice.strategy.frequency-type|enum|通知策略类型：showcount（次数）/timeout（时间）|是|
+|notice.strategy.notice-show-count|int|当策略类型为showcount时，表示距上次通知再出钱多少次需要再次通知|否|
+|notice.strategy.notice-time-interval|duration|当策略类型为timeout时，表示距上次通知经过多长时间后再次通知|否|
+
 
 # 参与贡献
 
