@@ -60,6 +60,11 @@ public class Notice extends AbnormalNotice {
     protected List<String> traceInfo = new ArrayList<>();
 
     /**
+     * 出现次数
+     */
+    protected Long showCount = 1L;
+
+    /**
      * 请求体
      */
     protected HttpServletRequest request;
@@ -150,6 +155,7 @@ public class Notice extends AbnormalNotice {
         stringBuilder.append("异常追踪：").append("\r\n").append(String.join("\r\n", traceInfo)).append("\r\n");
         stringBuilder.append("最后一次出现时间：").append(createTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")))
                 .append("\r\n");
+        stringBuilder.append("出现次数：").append(showCount).append("\r\n");
         return stringBuilder.toString();
 
     }
@@ -295,19 +301,33 @@ public class Notice extends AbnormalNotice {
         this.projectEnviroment = projectEnviroment;
     }
 
-    @Override
-    public String toString() {
-        return "ExceptionNotice [project=" + project + ", uid=" + uid + ", methodName=" + methodName + ", parames="
-                + parames + ", classPath=" + classPath + ", exceptionMessage=" + exceptionMessage + ", traceInfo="
-                + traceInfo + ", title=" + title + ", projectEnviroment="
-                + projectEnviroment + ", createTime=" + createTime + "]";
-    }
-
     public void setRequest(HttpServletRequest request){
         this.request = request;
     }
 
     public HttpServletRequest getRequest(){
         return request;
+    }
+
+    /**
+     * @return the showCount
+     */
+    public Long getShowCount() {
+        return showCount;
+    }
+
+    /**
+     * @param showCount the showCount to set
+     */
+    public void setShowCount(Long showCount) {
+        this.showCount = showCount;
+    }
+
+    @Override
+    public String toString() {
+        return "ExceptionNotice [project=" + project + ", uid=" + uid + ", methodName=" + methodName + ", parames="
+                + parames + ", classPath=" + classPath + ", exceptionMessage=" + exceptionMessage + ", traceInfo="
+                + traceInfo + ", showCount=" + showCount + ", title=" + title + ", projectEnviroment="
+                + projectEnviroment + ", createTime=" + createTime + "]";
     }
 }

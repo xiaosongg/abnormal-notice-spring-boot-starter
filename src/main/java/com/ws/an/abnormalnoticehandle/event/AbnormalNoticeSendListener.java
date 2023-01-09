@@ -3,6 +3,7 @@ package com.ws.an.abnormalnoticehandle.event;
 import com.ws.an.abnormalnoticehandle.interfaces.AbnormalNoticeStatisticsRepository;
 import com.ws.an.message.INoticeSendComponent;
 import com.ws.an.pojos.Notice;
+import com.ws.an.properties.abnormal.AbnormalNoticeFrequencyStrategy;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -18,8 +19,8 @@ public class AbnormalNoticeSendListener extends AbstractNoticeSendListener {
 
     private final static Log logger = LogFactory.getLog(AbnormalNoticeSendListener.class);
 
-    public AbnormalNoticeSendListener(List<INoticeSendComponent<Notice>> noticeSendComponents, AbnormalNoticeStatisticsRepository abnormalNoticeStatisticsRepository){
-        super(noticeSendComponents,abnormalNoticeStatisticsRepository);
+    public AbnormalNoticeSendListener(AbnormalNoticeFrequencyStrategy abnormalNoticeFrequencyStrategy,List<INoticeSendComponent<Notice>> noticeSendComponents, AbnormalNoticeStatisticsRepository abnormalNoticeStatisticsRepository){
+        super(abnormalNoticeFrequencyStrategy,noticeSendComponents,abnormalNoticeStatisticsRepository);
     }
 
     @Override

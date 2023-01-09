@@ -4,9 +4,11 @@ import com.ws.an.abnormalnoticehandle.interfaces.AbnormalNoticeStatisticsReposit
 import com.ws.an.message.INoticeSendComponent;
 import com.ws.an.pojos.AbnormalStatistics;
 import com.ws.an.pojos.Notice;
+import com.ws.an.properties.abnormal.AbnormalNoticeFrequencyStrategy;
 import org.springframework.context.ApplicationListener;
 
 import javax.servlet.http.HttpServletRequest;
+import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -18,6 +20,8 @@ import java.util.List;
  */
 public abstract class AbstractNoticeSendListener implements ApplicationListener<AbnormalNoticeEvent> {
 
+    private final AbnormalNoticeFrequencyStrategy abnormalNoticeFrequencyStrategy;
+
     private final List<INoticeSendComponent<Notice>> noticeSendComponents;
 
     private final AbnormalNoticeStatisticsRepository abnormalNoticeStatisticsRepository;
@@ -25,8 +29,9 @@ public abstract class AbstractNoticeSendListener implements ApplicationListener<
     /**
      * @param noticeSendComponents
      */
-    public AbstractNoticeSendListener(List<INoticeSendComponent<Notice>> noticeSendComponents,AbnormalNoticeStatisticsRepository abnormalNoticeStatisticsRepository) {
+    public AbstractNoticeSendListener(AbnormalNoticeFrequencyStrategy abnormalNoticeFrequencyStrategy, List<INoticeSendComponent<Notice>> noticeSendComponents, AbnormalNoticeStatisticsRepository abnormalNoticeStatisticsRepository) {
 
+        this.abnormalNoticeFrequencyStrategy = abnormalNoticeFrequencyStrategy;
         this.noticeSendComponents = noticeSendComponents;
         this.abnormalNoticeStatisticsRepository = abnormalNoticeStatisticsRepository;
     }
@@ -35,9 +40,31 @@ public abstract class AbstractNoticeSendListener implements ApplicationListener<
 
         AbnormalStatistics abnormalStatistics = abnormalNoticeStatisticsRepository.increaseOne(notice);
 
+        if (this.stratergyCheck(abnormalStatistics, abnormalNoticeFrequencyStrategy)) {
+            notice.setShowCount(abnormalStatistics.getShowCount().longValue());
+            notice.setCreateTime(LocalDateTime.now());
+            noticeSendComponents.forEach(x -> x.send(notice));
+            abnormalNoticeStatisticsRepository.increaseShowOne(abnormalStatistics);
+        }
 
-        notice.setCreateTime(LocalDateTime.now());
-        noticeSendComponents.forEach(x -> x.send(notice));
 
+    }
+
+    protected boolean stratergyCheck(AbnormalStatistics abnormalStatistics,
+                                     AbnormalNoticeFrequencyStrategy abnormalNoticeFrequencyStrategy) {
+        if (abnormalStatistics.isFirstCreated()) {
+            abnormalStatistics.setFirstCreated(false);
+            return true;
+        }
+        boolean flag = false;
+        switch (abnormalNoticeFrequencyStrategy.getFrequencyType()) {
+            case TIMEOUT:
+                Duration dur = Duration.between(abnormalStatistics.getNoticeTime(), LocalDateTime.now());
+                flag = abnormalNoticeFrequencyStrategy.getNoticeTimeInterval().compareTo(dur) < 0;
+            case SHOWCOUNT:
+                flag = abnormalStatistics.getShowCount().longValue() - abnormalStatistics.getLastNoticedCount()
+                        .longValue() > abnormalNoticeFrequencyStrategy.getNoticeShowCount().longValue();
+        }
+        return flag;
     }
 }

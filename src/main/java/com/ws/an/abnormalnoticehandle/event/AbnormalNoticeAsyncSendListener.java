@@ -3,6 +3,7 @@ package com.ws.an.abnormalnoticehandle.event;
 import com.ws.an.abnormalnoticehandle.interfaces.AbnormalNoticeStatisticsRepository;
 import com.ws.an.message.INoticeSendComponent;
 import com.ws.an.pojos.Notice;
+import com.ws.an.properties.abnormal.AbnormalNoticeFrequencyStrategy;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.core.task.AsyncTaskExecutor;
@@ -22,9 +23,9 @@ public class AbnormalNoticeAsyncSendListener extends AbstractNoticeSendListener 
 
     private final Executor executor;
 
-    public AbnormalNoticeAsyncSendListener(AsyncTaskExecutor applicationTaskExecutor, List<INoticeSendComponent<Notice>> noticeSendComponents, AbnormalNoticeStatisticsRepository abnormalNoticeStatisticsRepository) {
+    public AbnormalNoticeAsyncSendListener(AbnormalNoticeFrequencyStrategy abnormalNoticeFrequencyStrategy,AsyncTaskExecutor applicationTaskExecutor, List<INoticeSendComponent<Notice>> noticeSendComponents, AbnormalNoticeStatisticsRepository abnormalNoticeStatisticsRepository) {
 
-        super(noticeSendComponents,abnormalNoticeStatisticsRepository);
+        super(abnormalNoticeFrequencyStrategy,noticeSendComponents,abnormalNoticeStatisticsRepository);
 
         this.executor = applicationTaskExecutor;
     }

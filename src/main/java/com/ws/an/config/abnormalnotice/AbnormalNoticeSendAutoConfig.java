@@ -49,18 +49,18 @@ public class AbnormalNoticeSendAutoConfig {
     @Bean
     @ConditionalOnMissingBean
     @ConditionalOnProperty(value = "abnormal.notice.enable-async", havingValue = "false", matchIfMissing = true)
-    public AbstractNoticeSendListener abnormalNoticeSendListener(AbnormalNoticeStatisticsRepository abnormalNoticeStatisticsRepository) {
+    public AbstractNoticeSendListener abnormalNoticeSendListener(AbnormalNoticeFrequencyStrategy abnormalNoticeFrequencyStrategy,AbnormalNoticeStatisticsRepository abnormalNoticeStatisticsRepository) {
         logger.info("开始创建同步发送监听器");
-        AbstractNoticeSendListener listener = new AbnormalNoticeSendListener(list, abnormalNoticeStatisticsRepository);
+        AbstractNoticeSendListener listener = new AbnormalNoticeSendListener(abnormalNoticeFrequencyStrategy,list, abnormalNoticeStatisticsRepository);
         return listener;
     }
 
     @Bean
     @ConditionalOnMissingBean
     @ConditionalOnProperty(value = "abnormal.notice.enable-async", havingValue = "true")
-    public AbstractNoticeSendListener abnormalNoticeAsyncSendListener(AsyncTaskExecutor applicationTaskExecutor, AbnormalNoticeStatisticsRepository abnormalNoticeStatisticsRepository) {
+    public AbstractNoticeSendListener abnormalNoticeAsyncSendListener(AbnormalNoticeFrequencyStrategy abnormalNoticeFrequencyStrategy,AsyncTaskExecutor applicationTaskExecutor, AbnormalNoticeStatisticsRepository abnormalNoticeStatisticsRepository) {
         logger.info("开始创建异步发送监听器");
-        AbstractNoticeSendListener listener = new AbnormalNoticeAsyncSendListener(applicationTaskExecutor, list, abnormalNoticeStatisticsRepository);
+        AbstractNoticeSendListener listener = new AbnormalNoticeAsyncSendListener(abnormalNoticeFrequencyStrategy,applicationTaskExecutor, list, abnormalNoticeStatisticsRepository);
         return listener;
     }
 
