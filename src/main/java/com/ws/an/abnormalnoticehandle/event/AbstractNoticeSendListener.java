@@ -7,7 +7,6 @@ import com.ws.an.pojos.Notice;
 import com.ws.an.properties.abnormal.AbnormalNoticeFrequencyStrategy;
 import org.springframework.context.ApplicationListener;
 
-import javax.servlet.http.HttpServletRequest;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.List;

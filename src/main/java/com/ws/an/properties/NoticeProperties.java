@@ -3,7 +3,6 @@ package com.ws.an.properties;
 import com.ws.an.properties.enums.ListenType;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 

@@ -7,7 +7,6 @@ import org.springframework.boot.autoconfigure.mail.MailProperties;
 import org.springframework.mail.MailSender;
 import org.springframework.mail.SimpleMailMessage;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.regex.Pattern;
 
 /**

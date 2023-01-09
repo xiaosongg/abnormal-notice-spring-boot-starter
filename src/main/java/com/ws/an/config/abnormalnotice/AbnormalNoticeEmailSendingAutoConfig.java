@@ -19,8 +19,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.mail.MailSender;
 
-import javax.annotation.Resource;
-
 /**
  * @author WuSong
  * @version 1.0

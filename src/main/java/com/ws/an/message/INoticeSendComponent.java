@@ -2,8 +2,6 @@ package com.ws.an.message;
 
 import com.ws.an.pojos.AbnormalNotice;
 
-import javax.servlet.http.HttpServletRequest;
-
 /**
  * @author WuSong
  * @version 1.0

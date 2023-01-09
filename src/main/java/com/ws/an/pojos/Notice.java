@@ -2,15 +2,11 @@ package com.ws.an.pojos;
 
 import com.ws.an.properties.enums.ProjectEnviroment;
 import org.springframework.util.DigestUtils;
-import org.springframework.web.context.request.RequestContextHolder;
-import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.net.URLDecoder;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 

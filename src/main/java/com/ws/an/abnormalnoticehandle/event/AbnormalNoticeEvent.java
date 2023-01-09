@@ -3,8 +3,6 @@ package com.ws.an.abnormalnoticehandle.event;
 import com.ws.an.pojos.Notice;
 import org.springframework.context.ApplicationEvent;
 
-import javax.servlet.http.HttpServletRequest;
-
 /**
  * @author WuSong
  * @version 1.0

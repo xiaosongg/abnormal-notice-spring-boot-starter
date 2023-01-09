@@ -1,6 +1,5 @@
 package com.ws.an.config.abnormalnotice;
 
-import com.ws.an.config.annos.ConditionalOnAbnormalNotice;
 import com.ws.an.properties.notice.WechatNoticeProperty;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
