@@ -7,7 +7,7 @@ import java.util.concurrent.atomic.AtomicLong;
  * @author WuSong
  * @version 1.0
  * @date 2023/1/8 22:29
- * @description
+ * @description 异常统计
  */
 public class AbnormalStatistics {
 

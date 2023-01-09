@@ -1,8 +1,10 @@
 package com.ws.an.config.abnormalnotice;
 
+import com.ws.an.abnormalnoticehandle.components.DefaultAbnormalNoticeStatisticsRepository;
 import com.ws.an.abnormalnoticehandle.event.AbnormalNoticeAsyncSendListener;
 import com.ws.an.abnormalnoticehandle.event.AbnormalNoticeSendListener;
 import com.ws.an.abnormalnoticehandle.event.AbstractNoticeSendListener;
+import com.ws.an.abnormalnoticehandle.interfaces.AbnormalNoticeStatisticsRepository;
 import com.ws.an.config.annos.ConditionalOnAbnormalNotice;
 import com.ws.an.message.INoticeSendComponent;
 import com.ws.an.pojos.Notice;
@@ -31,6 +33,14 @@ public class AbnormalNoticeSendAutoConfig {
     private List<INoticeSendComponent<Notice>> list;
 
     private final Log logger = LogFactory.getLog(AbnormalNoticeSendAutoConfig.class);
+
+    @Bean
+    @ConditionalOnMissingBean
+    public AbnormalNoticeStatisticsRepository exceptionNoticeStatisticsRepository() {
+        logger.debug("创建默认异常统计仓库");
+        AbnormalNoticeStatisticsRepository repository = new DefaultAbnormalNoticeStatisticsRepository();
+        return repository;
+    }
 
     @Bean
     @ConditionalOnMissingBean
