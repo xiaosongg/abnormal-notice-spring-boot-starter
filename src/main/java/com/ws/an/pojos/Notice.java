@@ -30,7 +30,7 @@ public class Notice extends AbnormalNotice {
     protected String project;
 
     /**
-     * 异常的标识码
+     * 异常的唯一id
      */
     protected String uid;
 
