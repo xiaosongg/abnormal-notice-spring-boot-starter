@@ -8,11 +8,14 @@ import com.ws.an.abnormalnoticehandle.interfaces.AbnormalNoticeStatisticsReposit
 import com.ws.an.config.annos.ConditionalOnAbnormalNotice;
 import com.ws.an.message.INoticeSendComponent;
 import com.ws.an.pojos.Notice;
+import com.ws.an.properties.abnormal.AbnormalNoticeFrequencyStrategy;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.task.AsyncTaskExecutor;
@@ -27,6 +30,7 @@ import java.util.List;
  */
 @Configuration
 @ConditionalOnAbnormalNotice
+@EnableConfigurationProperties({ AbnormalNoticeFrequencyStrategy.class })
 public class AbnormalNoticeSendAutoConfig {
 
     @Autowired
@@ -45,18 +49,18 @@ public class AbnormalNoticeSendAutoConfig {
     @Bean
     @ConditionalOnMissingBean
     @ConditionalOnProperty(value = "abnormal.notice.enable-async", havingValue = "false", matchIfMissing = true)
-    public AbstractNoticeSendListener abnormalNoticeSendListener() {
+    public AbstractNoticeSendListener abnormalNoticeSendListener(AbnormalNoticeStatisticsRepository abnormalNoticeStatisticsRepository) {
         logger.info("开始创建同步发送监听器");
-        AbstractNoticeSendListener listener = new AbnormalNoticeSendListener(list);
+        AbstractNoticeSendListener listener = new AbnormalNoticeSendListener(list, abnormalNoticeStatisticsRepository);
         return listener;
     }
 
     @Bean
     @ConditionalOnMissingBean
     @ConditionalOnProperty(value = "abnormal.notice.enable-async", havingValue = "true")
-    public AbstractNoticeSendListener abnormalNoticeAsyncSendListener(AsyncTaskExecutor applicationTaskExecutor) {
+    public AbstractNoticeSendListener abnormalNoticeAsyncSendListener(AsyncTaskExecutor applicationTaskExecutor, AbnormalNoticeStatisticsRepository abnormalNoticeStatisticsRepository) {
         logger.info("开始创建异步发送监听器");
-        AbstractNoticeSendListener listener = new AbnormalNoticeAsyncSendListener(applicationTaskExecutor,list);
+        AbstractNoticeSendListener listener = new AbnormalNoticeAsyncSendListener(applicationTaskExecutor, list, abnormalNoticeStatisticsRepository);
         return listener;
     }
 

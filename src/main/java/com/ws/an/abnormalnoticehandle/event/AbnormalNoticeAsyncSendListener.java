@@ -1,5 +1,6 @@
 package com.ws.an.abnormalnoticehandle.event;
 
+import com.ws.an.abnormalnoticehandle.interfaces.AbnormalNoticeStatisticsRepository;
 import com.ws.an.message.INoticeSendComponent;
 import com.ws.an.pojos.Notice;
 import org.apache.commons.logging.Log;
@@ -21,9 +22,9 @@ public class AbnormalNoticeAsyncSendListener extends AbstractNoticeSendListener 
 
     private final Executor executor;
 
-    public AbnormalNoticeAsyncSendListener(AsyncTaskExecutor applicationTaskExecutor, List<INoticeSendComponent<Notice>> noticeSendComponents) {
+    public AbnormalNoticeAsyncSendListener(AsyncTaskExecutor applicationTaskExecutor, List<INoticeSendComponent<Notice>> noticeSendComponents, AbnormalNoticeStatisticsRepository abnormalNoticeStatisticsRepository) {
 
-        super(noticeSendComponents);
+        super(noticeSendComponents,abnormalNoticeStatisticsRepository);
 
         this.executor = applicationTaskExecutor;
     }
