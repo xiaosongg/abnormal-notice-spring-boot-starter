@@ -4,7 +4,7 @@
 
     <groupId>com.wusong</groupId>
     <artifactId>abnormal-notice-spring-boot-starter</artifactId>
-    <version>1.0.0-personal</version>
+    <version>2.0.0-personal</version>
 
     <name>abnormal-notice-spring-boot-starter</name>
     <description>异常信息通知处理</description>
